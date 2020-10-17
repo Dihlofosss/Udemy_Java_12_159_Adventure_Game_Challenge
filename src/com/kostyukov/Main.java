@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Main {private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
+public class Main
+{
+	private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
 	
 	public static void main(String[] args)
 	{
@@ -32,6 +34,13 @@ public class Main {private static Map<Integer, Location> locations = new HashMap
 		locations.get(5).addExit("S", 1);
 		locations.get(5).addExit("W", 2);
 		
+		Map<String, String> dictionary = new HashMap<>();
+		dictionary.put("QUIT", "Q");
+		dictionary.put("NORTH", "N");
+		dictionary.put("EAST", "E");
+		dictionary.put("SOUTH", "S");
+		dictionary.put("WEST", "W");
+		
 		int loc = 1;
         while(true) {
             System.out.println(locations.get(loc).getDescription());
@@ -47,8 +56,20 @@ public class Main {private static Map<Integer, Location> locations = new HashMap
             System.out.println();
 
             String direction = scanner.nextLine().toUpperCase();
-            direction = InputAnalyzer(direction, " ");
-
+//            direction = InputAnalyzer(direction, " ");
+			if (direction.length() > 1)
+			{
+				String[] words = direction.split(" ");
+				for (String word: words)
+				{
+					if (dictionary.containsKey(word))
+					{
+						direction = dictionary.get(word);
+						break;
+					}
+				}
+			}
+			
             if(exits.containsKey(direction)) {
                 loc = exits.get(direction);
 
@@ -58,30 +79,30 @@ public class Main {private static Map<Integer, Location> locations = new HashMap
         }
 	}
 	
-	public static String InputAnalyzer(String input, String regex)
-	{
-		String[] inputToArray = input.split(regex);
-		for (String word : inputToArray)
-		{
-			switch (word)
-			{
-				case "NORTH", "N" -> {
-					return "N";
-				}
-				case "EAST", "E" -> {
-					return "E";
-				}
-				case "SOUTH", "S" ->{
-					return "S";
-				}
-				case "WEST", "W" ->{
-					return "W";
-				}
-				case "QUIT", "Q" ->{
-					return "Q";
-				}
-			}
-		}
-		return null;
-	}
+//	public static String InputAnalyzer(String input, String regex)
+//	{
+//		String[] inputToArray = input.split(regex);
+//		for (String word : inputToArray)
+//		{
+//			switch (word)
+//			{
+//				case "NORTH", "N" -> {
+//					return "N";
+//				}
+//				case "EAST", "E" -> {
+//					return "E";
+//				}
+//				case "SOUTH", "S" ->{
+//					return "S";
+//				}
+//				case "WEST", "W" ->{
+//					return "W";
+//				}
+//				case "QUIT", "Q" ->{
+//					return "Q";
+//				}
+//			}
+//		}
+//		return null;
+//	}
 }
